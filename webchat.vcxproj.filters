@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="epoller\epoller.cpp" />
+    <ClCompile Include="httpConn\httpConn.cpp" />
+    <ClCompile Include="log\log.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="sqlConn\sqlConn.cpp" />
+    <ClCompile Include="threadPool\threadPool.cpp" />
+    <ClCompile Include="webSock\webSock.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="epoller\epoller.h" />
+    <ClInclude Include="httpConn\httpConn.h" />
+    <ClInclude Include="log\log.h" />
+    <ClInclude Include="sqlConn\sqlConn.h" />
+    <ClInclude Include="threadPool\threadPool.h" />
+    <ClInclude Include="webSock\webSock.h" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,37 @@
+﻿  正在清理远程项目目录
+  正在验证源
+  正在将源远程复制到“14.103.168.41”
+  正在验证体系结构
+  正在验证体系结构
+  正在启动远程生成
+  正在编译源:
+  epoller.cpp
+  httpConn.cpp
+  log.cpp
+  main.cpp
+  sqlConn.cpp
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(7,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(7,27): warning :     7 |         for (int i = 0; i < size; i++) {
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(7,27): warning :       |                         ~~^~~~~~
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(10,97): warning : passing NULL to non-pointer argument 8 of ‘MYSQL* mysql_real_connect(MYSQL*, const char*, const char*, const char*, const char*, unsigned int, const char*, long unsigned int)’ [-Wconversion-null]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(10,97): warning :    10 |                 mysql_real_connect(conn, "14.103.168.41", "root", "371832", "webchat", 3306, 0, NULL);
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(10,97): warning :       |                                                                                                 ^~~~
+/usr/include/mysql/mysql.h(478,49): message : declared here
+/usr/include/mysql/mysql.h(478,49): message :   478 |                                   unsigned long clientflag);
+/usr/include/mysql/mysql.h(478,49): message :       |                                   ~~~~~~~~~~~~~~^~~~~~~~~~
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(29,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(29,27): warning :    29 |         for (int i = 0; i < connSize; i++) {
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(29,27): warning :       |                         ~~^~~~~~~~~~
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(41,27): warning : comparison of integer expressions of different signedness: ‘int’ and ‘unsigned int’ [-Wsign-compare]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(41,27): warning :    41 |         for (int i = 0; i < connSize; i++) {
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(41,27): warning :       |                         ~~^~~~~~~~~~
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(37,1): warning : control reaches end of non-void function [-Wreturn-type]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(37,1): warning :    37 | }
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(37,1): warning :       | ^
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(48,1): warning : control reaches end of non-void function [-Wreturn-type]
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(48,1): warning :    48 | }
+E:\c++\项目\webchat\webchat\sqlConn\sqlConn.cpp(48,1): warning :       | ^
+  threadPool.cpp
+  webSock.cpp
+  正在链接对象
+  webchat.vcxproj -> E:\c++\项目\webchat\webchat\bin\x64\Debug\webchat.out
