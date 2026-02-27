@@ -6,9 +6,9 @@
 
 int main(){
 
-    sqlConn q;
+    sqlConn* q = sqlConn::instance();
     for(int i = 0;i < 100;i++){
-         MYSQL* conn = q.getConn();
+         MYSQL* conn = q->get_conn();
         MYSQL_RES* res;
         MYSQL_ROW row;
 
@@ -20,7 +20,7 @@ int main(){
         while((row = mysql_fetch_row(res)) != NULL){
             std::cout << row[0] << " " << row[1] << " " << row[2] << " " << row[3] << std::endl;
         }
-        q.returnConn(conn);
+        q->return_conn(conn);
         mysql_free_result(res);
         std::cout << std::endl;
     }

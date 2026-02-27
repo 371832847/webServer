@@ -9,7 +9,7 @@
 
 
 
-class epoller {
+class epoller{
 public:
 	explicit epoller(int maxEvent = 1024);
 	~epoller();
@@ -24,7 +24,7 @@ public:
 
 	int get_event_fd(size_t i) const;
 
-	uint32_t getEvents(size_t i) const;
+	uint32_t get_events(size_t i) const;
 
 private:
 	int epollFd;

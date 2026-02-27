@@ -1,6 +1,6 @@
 #include"epoller.h"
 
-epoller::epoller(int maxEvent):epollFd(epoll_create(512)),events(maxEvent)
+epoller::epoller(int maxEvent):epollFd(epoll_create(100000)),events(maxEvent)
 {
 	assert(epollFd >= 0 && events.size() > 0);
 }
@@ -51,7 +51,7 @@ int epoller::get_event_fd(size_t i) const
 	return events[i].data.fd;
 }
 
-uint32_t epoller::getEvents(size_t i) const
+uint32_t epoller::get_events(size_t i) const
 {
 	assert(i < events.size() && i >= 0);
 	return events[i].events;

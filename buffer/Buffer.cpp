@@ -114,6 +114,9 @@ ssize_t Buffer::read_fd(int fd,int* saveError){
 
 ssize_t Buffer::write_fd(int fd,int* saveError){
     size_t readable = readable_bytes();
+    if(readable == 0){
+        return 1;
+    }
     ssize_t len = write(fd,peek(),readable);
     if(len < 0){
         *saveError = errno;
@@ -123,6 +126,10 @@ ssize_t Buffer::write_fd(int fd,int* saveError){
     return len;
 }
 
+size_t Buffer::size(){
+    return buffer.size();
+}
+
 
 char* Buffer::_begin_ptr(){
     return &*buffer.begin();
@@ -130,7 +137,7 @@ char* Buffer::_begin_ptr(){
 
 void Buffer::_make_space(size_t len){
     if(readPtr + writeable_bytes() < len){
-        buffer.resize(writePtr + len - 1);
+        buffer.resize(writePtr*2 + len);
     }else{
         std::copy(_begin_ptr()+readPtr,_begin_ptr()+writePtr,_begin_ptr());
         writePtr = readable_bytes();

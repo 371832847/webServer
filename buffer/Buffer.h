@@ -21,7 +21,7 @@
 
 class Buffer{
 public:
-    Buffer(int initBufferSize = 10);
+    Buffer(int initBufferSize = 10);   
     ~Buffer() = default;
 
     size_t writeable_bytes() const;
@@ -47,6 +47,7 @@ public:
 
     ssize_t read_fd(int fd,int* error);
     ssize_t write_fd(int fd,int* error);
+    size_t size();
 
 private:
 

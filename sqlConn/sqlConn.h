@@ -21,11 +21,13 @@ public:
 	sqlConn(unsigned int size = 8);
 	~sqlConn();
 	
-	MYSQL* getConn();					//get connection
+	static sqlConn* instance();
 
-	bool returnConn(MYSQL* conn);		//return connection
+	MYSQL* get_conn();					//get connection
 
-	unsigned int getAvaliable();		//get avaliable connection num
+	bool return_conn(MYSQL* conn);		//return connection
+
+	unsigned int get_avaliable();		//get avaliable connection num
 
 private:
 	std::vector<MYSQL*> pool;			//connection pool

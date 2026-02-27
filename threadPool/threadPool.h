@@ -1,47 +1,68 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
 
-#include<iostream>
 #include<thread>
 #include<mutex>
 #include<condition_variable>
-#include<list>
-#include<vector>
-#include<atomic>
+#include<queue>
+#include<assert.h>
+#include<functional>
 
-typedef void (*func)(void*);
-
-class task {
-public:
-	task(func point,void* arg) {
-		funcPoint = point;
-		data = arg;
-	};
-	~task() {
-		funcPoint = NULL;
-	};
-	func funcPoint;			//func point
-	void* data;				//arg
-};
 
 class threadPool {
 public:
-	threadPool(int taskSize = 1000,int threadNum = 8);	//init
-	~threadPool();	//close
+	explicit threadPool(size_t threadCount = 8): pool_(std::make_shared<Pool>()){
+		assert(threadCount > 0);
+		for(size_t i = 0; i < threadCount; i++){
+			std::thread([pool = pool_]{
+				std::unique_lock<std::mutex> locker(pool->mtx);
+				while(true){
 
-	void addTask(func f,void* d);
+					if(!pool->tasks.empty()){
+						auto task = std::move(pool->tasks.front());
+						pool->tasks.pop();
+						locker.unlock();
+						task();
+						locker.lock();
+					}else if(pool->isClosed){break;}
+					else{
+						pool->cond.wait(locker);
+					}
+				}
+			}).detach();
+		}
+	}
 
-	void shutdown();
+
+	threadPool() = default;
+
+	threadPool(threadPool&& ) = default;
+
+	~threadPool(){
+		if(pool_){
+			std::lock_guard<std::mutex> locker(pool_->mtx);
+			pool_->isClosed = true;
+		}
+		pool_->cond.notify_all();
+	}
+
+template<class F>
+void add_task(F&& task){
+	{
+		std::lock_guard<std::mutex> locker(pool_->mtx);
+		pool_->tasks.emplace(std::forward<F>(task));
+	}
+	pool_->cond.notify_one();
+}
 
 private:
-	std::vector<std::thread> workers;	//worker queue
-	std::list<task*> list;				//task queue
-	int ThreadNum;						//thread num
-	std::atomic<int> taskNum;			//task num
-	int taskSize;						//task queue size
-	std::mutex mtx;						//mutex
-	std::condition_variable cv;			//condition_variable
-	std::atomic<bool> shutDown;			//thread close flag
+	struct Pool{
+		std::mutex mtx;
+		std::condition_variable cond;
+		bool isClosed;
+		std::queue<std::function<void()>> tasks;
+	};
+	std::shared_ptr<Pool> pool_;
 };
 
 #endif

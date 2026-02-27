@@ -1,6 +1,15 @@
 #include"sqlConn.h"
 
 
+
+
+sqlConn* sqlConn::instance(){
+	static sqlConn pool;
+	return &pool;
+}
+
+
+
 sqlConn::sqlConn(unsigned int size) {
 	this->connSize = size;
 	avaliable = size;
@@ -8,7 +17,7 @@ sqlConn::sqlConn(unsigned int size) {
 		MYSQL* conn;
 		conn = mysql_init(NULL);
 		assert(mysql_real_connect(conn, IP_ADDR, NAME, PWD, DATABASE, 3306, 0, NULL));
-		
+		 
 		pool.emplace_back(conn);
 		flag.push_back(true);
 	}
@@ -22,7 +31,7 @@ sqlConn::~sqlConn() {
 	}
 }
 
-MYSQL* sqlConn::getConn() {
+MYSQL* sqlConn::get_conn() {
 	std::lock_guard<std::mutex> m(mtx);
 	if (avaliable == 0) {
 		return NULL;
@@ -34,10 +43,10 @@ MYSQL* sqlConn::getConn() {
 			return pool[i];
 		}
 	}
-
+	return NULL;
 }
 
-bool sqlConn::returnConn(MYSQL *conn) {
+bool sqlConn::return_conn(MYSQL *conn) {
 	std::lock_guard<std::mutex> m(mtx);
 	for (int i = 0; i < connSize; i++) {
 		if (conn == pool[i]) {
@@ -46,6 +55,7 @@ bool sqlConn::returnConn(MYSQL *conn) {
 			return true;
 		}
 	}
+	return false;
 }
 
-unsigned int sqlConn::getAvaliable() { return avaliable; }
+unsigned int sqlConn::get_avaliable() { return avaliable; }
